@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import contactsOperations from "../../redux/contacts/contacts-operations";
-import { getVisibleContacts } from "../../redux/contacts/contacts-selectors";
+import {
+  getVisibleContacts,
+  getFilter,
+} from "../../redux/contacts/contacts-selectors";
 
 import s from "./ContactList.module.css";
 
@@ -19,7 +22,7 @@ const ContactListItem = ({ id, name, number, onRemove }) => {
 
 export default function ContactList() {
   const contacts = useSelector(getVisibleContacts);
-
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(contactsOperations.fetchContacts());
@@ -27,7 +30,7 @@ export default function ContactList() {
 
   const onRemove = (id) => dispatch(contactsOperations.removeContact(id));
 
-  if (contacts.length === 0) return null;
+  if (contacts.length === 0) return <p>No contacts by name - {filter}.</p>;
 
   return (
     <ul className={s.list}>
