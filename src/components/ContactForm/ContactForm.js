@@ -1,9 +1,8 @@
 import { useState } from "react";
 // import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
 
-import { addContact } from "../../redux/contacts/contacts-actions";
+import contactsOperations from "../../redux/contacts/contacts-operations";
 import s from "./ContactForm.module.css";
 import { getContacts } from "../../redux/contacts/contacts-selectors";
 
@@ -34,8 +33,8 @@ export default function ContactForm() {
   };
 
   const dispatch = useDispatch();
-  const onSubmit = ({ id, name, number }) =>
-    dispatch(addContact({ id, name, number }));
+  const onSubmit = ({ name, number }) =>
+    dispatch(contactsOperations.addContact({ name, number }));
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
@@ -45,7 +44,7 @@ export default function ContactForm() {
       return;
     }
 
-    onSubmit({ id: uuidv4(), name, number });
+    onSubmit({ name, number });
 
     reset();
   };
