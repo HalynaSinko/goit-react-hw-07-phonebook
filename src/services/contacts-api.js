@@ -1,18 +1,17 @@
-// import axios from "axios";
+import axios from "axios";
 
-// const BASE_URL = "http://localhost:4040";
+const BASE_URL = "http://localhost:4040";
 
-// axios.defaults.baseURL = BASE_URL;
+axios.defaults.baseURL = BASE_URL;
 
-// export async function fetchAllContacts() {
-//   return  await axios.get("/contacts");
-//
-// }
+export async function fetchAllContacts() {
+  return await axios.get("/contacts");
+}
 
-// export async function addNewContact(contact) {
-//   return await axios.post("/contacts", contact);
-// }
+export async function addNewContact(contact) {
+  return await axios.post("/contacts", contact);
+}
 
-// export async function removeContactById(contactId) {
-//   return await axios.post("/contacts", contactId);
-// }
+export async function removeContactById(contactId) {
+  return await axios.post("/contacts", contactId);
+}

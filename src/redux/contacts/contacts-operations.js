@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import {
   fetchContactsRequest,
   fetchContactsSuccess,
@@ -11,39 +9,45 @@ import {
   removeContactSuccess,
   removeContactError,
 } from "./contacts-actions";
+import * as contactsApi from "../../services/contacts-api";
 
-const BASE_URL = "http://localhost:4040";
-
-axios.defaults.baseURL = BASE_URL;
-
-const fetchContacts = () => (dispatch) => {
+const fetchContacts = () => async (dispatch) => {
   dispatch(fetchContactsRequest());
-  axios
-    .get("/contacts")
-    .then(({ data }) => {
-      dispatch(fetchContactsSuccess(data));
-    })
-    .catch((error) => dispatch(fetchContactsError(error)));
+
+  try {
+    const { data } = await contactsApi.fetchAllContacts();
+    console.log(data);
+    dispatch(fetchContactsSuccess(data));
+  } catch (error) {
+    dispatch(fetchContactsError(error));
+  }
 };
 
 const addContact =
   ({ name, number }) =>
-  (dispatch) => {
+  async (dispatch) => {
     const contact = { name, number };
-
     dispatch(addContactRequest());
-    axios
-      .post("/contacts", contact)
-      .then(({ data }) => dispatch(addContactSuccess(data)))
-      .catch((error) => dispatch(addContactError(error)));
+
+    try {
+      const { data } = await contactsApi.addNewContact(contact);
+      console.log(data);
+
+      dispatch(addContactSuccess(data));
+    } catch (error) {
+      dispatch(addContactError(error));
+    }
   };
 
-const removeContact = (contactId) => (dispatch) => {
+const removeContact = (contactId) => async (dispatch) => {
   dispatch(removeContactRequest());
-  axios
-    .delete(`/contacts/${contactId}`)
-    .then(() => dispatch(removeContactSuccess(contactId)))
-    .catch((error) => dispatch(removeContactError(error)));
+
+  try {
+    await contactsApi.removeContactById(contactId);
+    dispatch(removeContactSuccess(contactId));
+  } catch (error) {
+    dispatch(removeContactError(error));
+  }
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

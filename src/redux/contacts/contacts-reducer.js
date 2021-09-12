@@ -55,18 +55,18 @@ const filterReducer = createReducer("", {
   [changeFilter]: (_, { payload }) => payload,
 });
 
-// const errorReducer = createReducer(null, {
-//   [fetchContactsError]: (_, { payload }) => payload,
-//   [addContactError]: (_, { payload }) => payload,
-//   [removeContactError]: (_, { payload }) => payload,
-//   [fetchContactsRequest]: () => null,
-//   [addContactRequest]: () => null,
-//   [removeContactRequest]: () => null,
-// });
+const errorReducer = createReducer(null, {
+  [fetchContactsError]: (_, { payload }) => payload,
+  [addContactError]: (_, { payload }) => payload,
+  [removeContactError]: (_, { payload }) => payload,
+  [fetchContactsRequest]: () => null,
+  [addContactRequest]: () => null,
+  [removeContactRequest]: () => null,
+});
 
 export default combineReducers({
   items: itemsReducer,
   filter: filterReducer,
   loading: loadingReducer,
-  // error: errorReducer,
+  error: errorReducer,
 });
