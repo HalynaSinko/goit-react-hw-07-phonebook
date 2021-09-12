@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import contactsOperations from "../../redux/contacts/contacts-operations";
-import {
-  // getIsloading,
-  getVisibleContacts,
-} from "../../redux/contacts/contacts-selectors";
+import { getVisibleContacts } from "../../redux/contacts/contacts-selectors";
 
 import s from "./ContactList.module.css";
 
@@ -22,8 +19,7 @@ const ContactListItem = ({ id, name, number, onRemove }) => {
 
 export default function ContactList() {
   const contacts = useSelector(getVisibleContacts);
-  // const isLoading = useSelector(getIsloading);
-  console.log(contacts);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(contactsOperations.fetchContacts());

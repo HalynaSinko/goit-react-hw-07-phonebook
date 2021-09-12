@@ -17,6 +17,8 @@ import {
 //   contacts: {
 //     items: [],
 //     filter: "",
+//     loading: false,
+//     error: null,
 //   },
 // };
 // const initialContacts = [
@@ -29,7 +31,7 @@ import {
 const itemsReducer = createReducer([], {
   [fetchContactsSuccess]: (_, { payload }) => payload,
   [addContactSuccess]: (state, { payload }) => {
-    return [payload, ...state];
+    return [...state, payload];
   },
   [removeContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
@@ -39,20 +41,32 @@ const loadingReducer = createReducer(false, {
   [fetchContactsRequest]: () => true,
   [fetchContactsSuccess]: () => false,
   [fetchContactsError]: () => false,
+
   [addContactRequest]: () => true,
   [addContactSuccess]: () => false,
   [addContactError]: () => false,
+
+  [removeContactRequest]: () => true,
   [removeContactSuccess]: () => false,
   [removeContactError]: () => false,
-  [removeContactRequest]: () => true,
 });
 
 const filterReducer = createReducer("", {
   [changeFilter]: (_, { payload }) => payload,
 });
 
+const errorReducer = createReducer(null, {
+  [fetchContactsError]: (_, { payload }) => payload,
+  [addContactError]: (_, { payload }) => payload,
+  [removeContactError]: (_, { payload }) => payload,
+  [fetchContactsRequest]: () => null,
+  [addContactRequest]: () => null,
+  [removeContactRequest]: () => null,
+});
+
 export default combineReducers({
   items: itemsReducer,
   filter: filterReducer,
   loading: loadingReducer,
+  error: errorReducer,
 });
