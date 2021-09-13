@@ -13,5 +13,5 @@ export async function addNewContact(contact) {
 }
 
 export async function removeContactById(contactId) {
-  return await axios.post("/contacts", contactId);
+  return await axios.delete(`/contacts/${contactId}`);
 }
